@@ -9,11 +9,11 @@ var runSequence = require('run-sequence');
 
 gulp.task('build', function(callback) {
     runSequence(
+        'sprites',
         [
             'sass',
             'scripts'
         ],
-        'base64',
         callback
     );
 });

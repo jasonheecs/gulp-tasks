@@ -10,7 +10,13 @@ var base64 = require('gulp-base64');
 var cache = require('gulp-cached');
 var config = require('../../config').base64;
 
+// run the sass task as a dependency if the base64 task is run from the command line
 gulp.task('base64', ['sass'], function() {
+    gulp.start('base64::run');
+});
+
+// run this task for base64 encoding during gulp build (to avoid running the sass task twice in the initial build)
+gulp.task('base64::run', function() {
     return gulp.src(config.src)
         .pipe(cache('base64'))
         .pipe(base64(config.options))

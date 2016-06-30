@@ -8,9 +8,12 @@ var batch = require('gulp-batch');
 var config = require('../../config').watch;
 
 gulp.task('watch', ['browsersync'], function() {
-    // gulp.watch(config.custom, ['rebuild']);
     // gulp.watch(config.scripts, ['concat:js', 'jshint']);
-    // gulp.watch(config.sprites, ['sprites']);
+    
+    watch(config.platformFiles, batch(function(events, callback) {
+        gulp.start('rebuild', callback);
+    }));
+
     watch(config.sass, batch(function(events, callback) {
         gulp.start('sass', callback);
         gulp.start('scsslint', callback);
@@ -20,4 +23,8 @@ gulp.task('watch', ['browsersync'], function() {
         gulp.start('scripts', callback);
         gulp.start('jshint', callback);
     }));
+
+    watch(config.sprites, function() {
+        gulp.start('sprites');
+    });
 });

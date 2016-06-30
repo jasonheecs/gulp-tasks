@@ -1,3 +1,5 @@
+/*jshint esversion: 6*/
+
 /**
  *  Config file used for gulp tasks
  */
@@ -6,6 +8,7 @@ var build               = 'public'; // development directory (where website in d
 var src                 = 'src'; // src directory (where various prebuilt assets are located)
 var dist                = 'dist'; // distribution directory (where final deployable website is located)
 
+var platform            = 'Joomla'; // which platform this project is built on. (Joomla / Wordpress / Prestashop)
 var cssFolderPath       = '/templates/protostar/css/custom/'; // where the css assets are located in the current template
 var jsFolderPath        = '/templates/protostar/js/custom/'; // where the js assets are located in the current template
 var imagesFolderPath    = '/images/'; // main images folder in development directory
@@ -76,22 +79,20 @@ module.exports = {
             baseDir: build + cssFolderPath, // The path specified in this option will be used as the base directory (relative to gulpfile) for absolute image paths
             extensions: ['png', 'jpg', 'jpeg', 'gif', 'svg'], // Process only specified extensions
             maxImageSize: 20 * 1024, // Maximum filesize in bytes for changing image to base64 (20 * 1024 = 20KB)
-            debug: true //Enable log to console
+            debug: true // Enable log to console
         }
     },
     watch: {
-        custom: [
-            build + '/**/*.{php,html}'
-        ],
+        platformFiles: determineFilesToWatch(platform),
         sass: src + '/scss/**/*.{sass,scss}',
         scripts: src + '/js/**/*.js',
-        images: src + '/images/**/*'
+        sprites: src + '/sprites/*.{png,jpg,jpeg}'
     },
     scsslint: {
         src: [
             src + '/scss/**/*.{sass,scss}', // dir where scss files are located
             '!' + src + '/scss/_sprites.scss', //ignore generated sprites 
-            '!' + src + '/scss/_sprites_jpg.scss'
+            '!' + src + '/scss/_sprites-jpg.scss'
         ],
         options: {
             bundleExec: false // If your scss_lint gem is installed via bundler, then set this option to true
@@ -193,4 +194,32 @@ function getRelativePath(from, to) {
     outputParts = outputParts.concat(toParts.slice(samePartsLength));
 
     return outputParts.join('/');
+}
+
+/**
+ * Determines which files to watch for browser reload based on the project's platform
+ * @param  {string} platform - Platform this project is built on (Joomla / Wordpress / Prestashop)
+ * @return {array} - a list of files to watch
+ */
+function determineFilesToWatch(platform) {
+    const PLATFORM_JOOMLA = 'joomla';
+
+    switch(platform.toLowerCase()) {
+        case PLATFORM_JOOMLA:
+            return [
+                build + '/administrator/components/**/*.{php,xml}',
+                build + '/administrator/language/overrides/*.ini',
+                build + '/administrator/modules/**/*.{php,xml}',
+                build + '/components/**/*.{php,xml}',
+                build + '/language/overrides/*.ini',
+                build + '/modules/**/*.{php,xml}',
+                build + '/plugins/**/*.{php,xml}',
+                build + '/templates/protostar/**/*.{php,html,xml,json,less}',
+            ];
+
+        default:
+            return [
+                build + '/**/*.{php,html}'
+            ];
+    }
 }
