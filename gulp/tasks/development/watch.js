@@ -1,5 +1,8 @@
 /**
  *  Start browsersync task and watch for file changes
+ *  Dependencies:
+ *   - gulp-watch
+ *   - gulp-batch
  */
 
 var gulp = require('gulp');
