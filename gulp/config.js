@@ -14,8 +14,6 @@ var jsFolderPath        = tplFolderPath + 'js/custom/'; // where the js assets a
 var imagesFolderPath    = '/images/'; // main images folder in development directory
 var tplImagesFolderPath = tplFolderPath + 'images/'; // images folder path in the current template (used by template css and plugins)
 
-var buildFolderPath     =  dev + tplFolderPath + '/build'; // build directory (where final deployable optimised assets are located)
-
 module.exports = {
     browsersync: {
         development: {
@@ -37,15 +35,6 @@ module.exports = {
             proxy: 'http://192.168.33.10/', // proxy an existing vhost
             // proxy: 'localhost/gulp-tasks/public',
         },
-        // production: {
-        //     base: dist, // dir to server files from
-        //     ghostMode: false, // Clicks, Scrolls & Form inputs on public url will not be mirrored to all others.
-        //     logFileChanges: false, // Don't log file changes
-        //     open: 'external', // Decide which URL to open automatically when Browsersync starts. Can be true, local, external, ui, ui-external, tunnel or false
-        //     port: 9999, // use a specific port, default port used by Browsersync is 3000
-        //     proxy: 'localhost', // proxy an existing vhost
-        //     tunnel: true // Tunnel the Browsersync server through a random Public URL
-        // }
         production: {
             codeSync: false, // Don't send any file-change events to browsers
             files: [ // list of files to watch
@@ -95,8 +84,8 @@ module.exports = {
         options: {
             baseDir: dev + cssFolderPath, // The path specified in this option will be used as the base directory (relative to gulpfile) for absolute image paths
             extensions: ['png', 'jpg', 'jpeg', 'gif', 'svg'], // Process only specified extensions
-            maxImageSize: 20 * 1024, // Maximum filesize in bytes for changing image to base64 (20 * 1024 = 20KB)
-            debug: true // Enable log to console
+            maxImageSize: 10 * 1024, // Maximum filesize in bytes for changing image to base64 (10 * 1024 = 10KB)
+            debug: false // Disable debug log to console
         }
     },
     watch: {
@@ -168,15 +157,15 @@ module.exports = {
     },
     optimise: {
         css : {
-            src: dev + cssFolderPath + '*.css',
-            dest: buildFolderPath + '/css/',
+            src: dev + cssFolderPath + '**/*.css',
+            dest: dev + cssFolderPath,
             options: {
                 autoprefixer: false
             }
         },
         js : {
-            src: dev + jsFolderPath + '*.js',
-            dest: buildFolderPath + '/js/'
+            src: dev + jsFolderPath + '**/*.js',
+            dest: dev + jsFolderPath
         },
         images: {
             sets: [
@@ -194,7 +183,7 @@ module.exports = {
             options: {
                 interlaced: true
             },
-            plugins: {
+            plugins: { //imagemin plugins
                 png: {
                     name: 'imagemin-pngquant',
                     options: {

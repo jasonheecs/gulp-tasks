@@ -1,7 +1,7 @@
 /**
  * Run all tasks need for a production build
  * Dependencies:
- *  - run-sequence
+ * - run-sequence
  */
 
 var gulp = require('gulp');
@@ -20,9 +20,6 @@ gulp.task('build:production', function(callback) {
             'optimise:js::run',
             'optimise:images'
         ],
-        // 'revision',
-        // 'rev:collect',
-        // 'rev:cleanup',
         callback
     );
 });
