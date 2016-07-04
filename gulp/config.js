@@ -201,6 +201,20 @@ module.exports = {
             }
         }
     },
+    zip: {
+        src: [
+            dev + '/**/*',
+            '!' + dev + '/sftp-config.json'
+        ],
+        dest: getTimestamp() + '.zip'
+    },
+    ftp: {
+        src: dev + '/**/*',
+        base: './' + dev,
+        options: {
+            parallel: 10
+        }
+    }
 };
 
 /**
@@ -274,4 +288,18 @@ function determineFilesToWatch(platform) {
                 dev + '/**/*.{php,html}'
             ];
     }
+}
+
+/**
+ * Generates timestamp for zip package file name
+ * @return {string} timestamp string in the format of yyyy_mm_dd_ms
+ */
+function getTimestamp() {
+    var currentDateTime = new Date();
+    var year = currentDateTime.getFullYear();
+    var month = currentDateTime.getMonth() + 1;
+    var day = currentDateTime.getDate();
+    var timestamp = currentDateTime.getTime();
+
+    return year + '_' + month + '_' + day + '_' + timestamp;
 }
