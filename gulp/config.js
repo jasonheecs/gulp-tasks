@@ -78,8 +78,12 @@ module.exports = {
             }
         ]
     },
+    concatJs: {
+        src: src + '/js/**/*.js',
+        dest: dev + jsFolderPath
+    },
     base64: {
-        src: dev + cssFolderPath + '*.css', // location of css files to run base64 task on
+        src: dev + cssFolderPath + '**/*.css', // location of css files to run base64 task on
         dest: dev + cssFolderPath, // dir to output the base64 encoded css files
         options: {
             baseDir: dev + cssFolderPath, // The path specified in this option will be used as the base directory (relative to gulpfile) for absolute image paths
@@ -105,7 +109,7 @@ module.exports = {
         }
     },
     jshint: {
-        src: src + '/js/*.js' // dir where js assets are
+        src: src + '/js/**/*.js' // dir where js assets are
     },
     sprites: {
         png: {
@@ -297,7 +301,7 @@ function determineFilesToWatch(platform) {
 }
 
 /**
- * Generates timestamp for zip package file name
+ * Generates timestamp to append to file dumps
  * @return {string} timestamp string in the format of yyyy_mm_dd_ms
  */
 function getTimestamp() {

@@ -6,4 +6,4 @@
 
 var gulp = require('gulp');
 
-gulp.task('deploy', ['ftp', 'db-export']);
+gulp.task('deploy', ['ftp', 'db:export']);
