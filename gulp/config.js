@@ -214,6 +214,12 @@ module.exports = {
         options: {
             parallel: 10
         }
+    },
+    db: {
+        export: {
+            dest: '/databases/',
+            filename: 'db_export_' + getTimestamp() + '.sql'
+        }
     }
 };
 

@@ -14,7 +14,14 @@ module.exports = {
             host: 'localhost',
             db_name: 'dummy',
             username: 'root',
-            password: 'root'
+            password: 'root',
+
+            // set ssh credentials if using vagrant box
+            ssh: {
+                host: '192.168.33.10',
+                username: 'vagrant',
+                password: 'vagrant'
+            }
         }
     }
 };
