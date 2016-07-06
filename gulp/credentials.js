@@ -12,7 +12,7 @@ module.exports = {
     db: {
         local: {
             host: 'localhost',
-            db_name: 'dummy',
+            db_name: 'prestashop_gulp',
             username: 'root',
             password: 'root',
 

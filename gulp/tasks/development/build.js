@@ -12,7 +12,8 @@ gulp.task('build', function(callback) {
         'sprites',
         [
             'sass',
-            'scripts'
+            'concat-js'
+            // 'scripts'
         ],
         callback
     );

@@ -23,7 +23,8 @@ gulp.task('watch', ['browsersync'], function() {
     }));
 
     watch(config.scripts, batch(function(events, callback) {
-        gulp.start('scripts', callback);
+        // gulp.start('scripts', callback);
+        gulp.start('concat-js', callback);
         gulp.start('jshint', callback);
     }));
 

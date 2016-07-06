@@ -7,12 +7,12 @@
 var dev                 = 'public'; // development directory (where website in development with unoptimised assets are located)
 var src                 = 'src'; // src directory (where various prebuilt assets are located)
 
-var platform            = 'Joomla'; // which platform this project is built on. (Joomla / Wordpress / Prestashop)
-var tplFolderPath       = '/templates/protostar/'; // folder path of the active template / theme
+var platform            = 'Prestashop'; // which platform this project is built on. (Joomla / Wordpress / Prestashop)
+var tplFolderPath       = '/themes/default-bootstrap/'; // folder path of the active template / theme
 var cssFolderPath       = tplFolderPath + 'css/custom/'; // where the css assets are located in the current template
 var jsFolderPath        = tplFolderPath + 'js/custom/'; // where the js assets are located in the current template
-var imagesFolderPath    = '/images/'; // main images folder in development directory
-var tplImagesFolderPath = tplFolderPath + 'images/'; // images folder path in the current template (used by template css and plugins)
+var imagesFolderPath    = '/img/'; // main images folder in development directory
+var tplImagesFolderPath = tplFolderPath + 'img/'; // images folder path in the current template (used by template css and plugins)
 
 module.exports = {
     browsersync: {
@@ -80,7 +80,8 @@ module.exports = {
     },
     concatJs: {
         src: src + '/js/**/*.js',
-        dest: dev + jsFolderPath
+        dest: dev + jsFolderPath,
+        outputName: 'custom.js'
     },
     base64: {
         src: dev + cssFolderPath + '**/*.css', // location of css files to run base64 task on
@@ -279,6 +280,7 @@ function getRelativePath(from, to) {
  */
 function determineFilesToWatch(platform) {
     const PLATFORM_JOOMLA = 'joomla';
+    const PLATFORM_PRESTASHOP = 'prestashop';
 
     switch(platform.toLowerCase()) {
         case PLATFORM_JOOMLA:
@@ -291,6 +293,15 @@ function determineFilesToWatch(platform) {
                 dev + '/modules/**/*.{php,xml}',
                 dev + '/plugins/**/*.{php,xml}',
                 dev + tplFolderPath + '**/*.{php,html,xml,json,less}',
+            ];
+
+        case PLATFORM_PRESTASHOP:
+            return [
+                dev + '/js/**/*.js',
+                dev + '/modules/**/*.{php,tpl,css,js}',
+                dev + '/override/**/*.{php,tpl,css,js}',
+                '!' + dev + tplFolderPath + '/cache/**/*',
+                dev + tplFolderPath + '**/*.{php,tpl}',
             ];
 
         default:

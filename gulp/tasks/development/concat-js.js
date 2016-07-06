@@ -1,3 +1,10 @@
+/**
+ * Concat various JS files into one.
+ * Dependencies:
+ * - gulp-concat
+ * - gulp-sourcemap
+ */
+
 var gulp = require('gulp');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');

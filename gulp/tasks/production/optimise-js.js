@@ -13,7 +13,7 @@ var size = require('gulp-size');
 var config = require('../../config').optimise.js;
 
 // run the scripts task as a dependency if the optimise:js task is run from the command line
-gulp.task('optimise:js', ['scripts'], function() {
+gulp.task('optimise:js', ['concat-js'], function() {
     gulp.start('optimise:js::run');
 });
 
