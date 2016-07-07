@@ -11,8 +11,6 @@ var batch = require('gulp-batch');
 var config = require('../../config').watch;
 
 gulp.task('watch', ['browsersync'], function() {
-    // gulp.watch(config.scripts, ['concat:js', 'jshint']);
-    
     watch(config.platformFiles, batch(function(events, callback) {
         gulp.start('rebuild', callback);
     }));

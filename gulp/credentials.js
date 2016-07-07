@@ -12,7 +12,7 @@ module.exports = {
     db: {
         local: {
             host: 'localhost',
-            db_name: 'prestashop_gulp',
+            db_name: 'scotchbox',
             username: 'root',
             password: 'root',
 

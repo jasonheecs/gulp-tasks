@@ -7,11 +7,11 @@
 var dev                 = 'public'; // development directory (where website in development with unoptimised assets are located)
 var src                 = 'src'; // src directory (where various prebuilt assets are located)
 
-var platform            = 'Prestashop'; // which platform this project is built on. (Joomla / Wordpress / Prestashop)
-var tplFolderPath       = '/themes/default-bootstrap/'; // folder path of the active template / theme
+var platform            = 'Wordpress'; // which platform this project is built on. (Joomla / Wordpress / Prestashop)
+var tplFolderPath       = '/wp-content/themes/twentysixteen/'; // folder path of the active template / theme
 var cssFolderPath       = tplFolderPath + 'css/custom/'; // where the css assets are located in the current template
 var jsFolderPath        = tplFolderPath + 'js/custom/'; // where the js assets are located in the current template
-var imagesFolderPath    = '/img/'; // main images folder in development directory
+var imagesFolderPath    = '/wp-content/uploads/'; // main images folder in development directory
 var tplImagesFolderPath = tplFolderPath + 'img/'; // images folder path in the current template (used by template css and plugins)
 
 module.exports = {
@@ -281,6 +281,7 @@ function getRelativePath(from, to) {
 function determineFilesToWatch(platform) {
     const PLATFORM_JOOMLA = 'joomla';
     const PLATFORM_PRESTASHOP = 'prestashop';
+    const PLATFORM_WORDPRESS = 'wordpress';
 
     switch(platform.toLowerCase()) {
         case PLATFORM_JOOMLA:
@@ -302,6 +303,11 @@ function determineFilesToWatch(platform) {
                 dev + '/override/**/*.{php,tpl,css,js}',
                 '!' + dev + tplFolderPath + '/cache/**/*',
                 dev + tplFolderPath + '**/*.{php,tpl}',
+            ];
+
+        case PLATFORM_WORDPRESS:
+            return [
+                dev + tplFolderPath + '**/*.php'
             ];
 
         default:
