@@ -18,28 +18,37 @@ var del = require('del');
 
 var ftpConn;
 
-gulp.task('ftp', function() {
-    return gulp.src('').pipe(
-        prompt.prompt({
-            type: 'checkbox',
-            name: 'zip_upload',
-            message: 'Upload entire directory in .zip format? If no, only modified files will be uploaded',
-            choices: ['yes', 'no']
-        }, function(result) {
-            ftpConn = createFTPConnection();
-            var choice = result.zip_upload[0];
+gulp.task('ftp', function(callback) {
+    var isWin = /^win/.test(process.platform);
 
-            if (choice === 'no') {
-                return gulp.src(config.src, { base:config.base, buffer:false })
-                    .pipe(ftpConn.newer(credentials.directory))
-                    .pipe(ftpConn.dest(credentials.directory));
-            } else if (choice === 'yes') {
-                runSequence('zip', 'upload', function() {
-                    del(['./' + global.zipFileName]);
-                });
-            }
-        })
-    );
+    // Windows does not work well with gulp-prompt it seems. So on Windows, we skip the prompt altogther and upload a zip file.
+    if (isWin) {
+        runSequence.apply(null, [].concat(sequenceTasks, function() {
+            del(['./' + global.zipFileName]);
+        }));
+    } else {
+        return gulp.src('').pipe(
+            prompt.prompt({
+                type: 'checkbox',
+                name: 'zip_upload',
+                message: 'Upload entire directory in .zip format? If no, only modified files will be uploaded',
+                choices: ['yes', 'no']
+            }, function(result) {
+                ftpConn = createFTPConnection();
+                var choice = result.zip_upload[0];
+
+                if (choice === 'no') {
+                    return gulp.src(config.src, { base:config.base, buffer:false })
+                        .pipe(ftpConn.newer(credentials.directory))
+                        .pipe(ftpConn.dest(credentials.directory));
+                } else if (choice === 'yes') {
+                    runSequence.apply(null, [].concat(sequenceTasks, function() {
+                        del(['./' + global.zipFileName]);
+                    }));
+                }
+            })
+        );
+    }
 });
 
 gulp.task('upload', function() {
