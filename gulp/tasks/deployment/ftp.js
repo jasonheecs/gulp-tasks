@@ -20,6 +20,7 @@ var ftpConn;
 
 gulp.task('ftp', function(callback) {
     var isWin = /^win/.test(process.platform);
+    var sequenceTasks = ['zip', 'upload'];
 
     // Windows does not work well with gulp-prompt it seems. So on Windows, we skip the prompt altogther and upload a zip file.
     if (isWin) {
