@@ -70,7 +70,7 @@ function getSqlDumpCommand(sqlDumpFilePath) {
     var shellCommand;
 
     if (credentials.ssh) {
-        if (credentials.password.length === '') {
+        if (credentials.password.length === 0) {
             shellCommand = util.format('mysqldump -u %s -h %s %s', 
                                         credentials.username, credentials.host, credentials.db_name);
         } else {
@@ -78,7 +78,7 @@ function getSqlDumpCommand(sqlDumpFilePath) {
                                         credentials.username, credentials.password, credentials.host, credentials.db_name);
         }
     } else {
-        if (credentials.password.length === '') {
+        if (credentials.password.length === 0) {
             shellCommand = util.format('mysqldump -u %s -h %s %s > %s', 
                                             credentials.username, credentials.host, credentials.db_name, '.'  + sqlDumpFilePath);
         } else {
