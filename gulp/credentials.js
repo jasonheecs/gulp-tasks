@@ -4,15 +4,15 @@
 
 module.exports = {
     ftp: {
-        host: 'efusiondemo.info',
-        username: 'testing@efusiondemo.info',
-        password: 'efusion987$$',
-        directory: '/testing'
+        host: 'example.com',
+        username: 'user@example.com',
+        password: 'password',
+        directory: '/project_dir'
     },
     db: {
         local: {
             host: 'localhost',
-            db_name: 'hegen',
+            db_name: 'scotchbox',
             username: 'root',
             password: 'root',
 
