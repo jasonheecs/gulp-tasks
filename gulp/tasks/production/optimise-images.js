@@ -18,9 +18,11 @@ gulp.task('optimise:images', function() {
     var optimiseImage = function(imageSet) {
         //configure plugins for imagemin
         var pluginsConfig = config.plugins;
+        var gifPlugin = require(pluginsConfig.gif.name);
         var pngPlugin = require(pluginsConfig.png.name);
         var jpgPlugin = require(pluginsConfig.jpg.name);
-        config.options.use = [pngPlugin(pluginsConfig.png.options),jpgPlugin(pluginsConfig.jpg.options)];
+        var svgPlugin = require(pluginsConfig.svg.name);
+        config.options.use = [gifPlugin(pluginsConfig.gif.options), pngPlugin(pluginsConfig.png.options),jpgPlugin(pluginsConfig.jpg.options), svgPlugin()];
 
         return gulp.src(imageSet.src)
             .pipe(imagemin(config.options))

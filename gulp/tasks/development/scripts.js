@@ -7,7 +7,6 @@
  *   - watchify
  *   - gulp-sourcemaps
  *   - vinyl-buffer
- *   - gulp-cached
  */
 
 var gulp = require('gulp');
@@ -17,7 +16,6 @@ var source = require('vinyl-source-stream');
 var watchify = require('watchify');
 var sourcemaps = require('gulp-sourcemaps');
 var vbuffer = require('vinyl-buffer');
-var cache = require('gulp-cached');
 var bundleLogger = require('../../util/bundleLogger');
 var handleErrors = require('../../util/handleErrors');
 var config = require('../../config').browserify;
@@ -51,7 +49,6 @@ gulp.task('scripts', function(callback) {
                     .bundle()
                     .on ('error', handleErrors) //report compile errors
                     .pipe(source(bundleConfig.outputName)) //use vinyl-source-stream to make stream gulp compatible. Specify desired output filename here.
-                    .pipe(cache('scripts'))
                     .pipe(vbuffer())
                     .pipe(sourcemaps.init({loadMaps: true}))
                     .pipe(sourcemaps.write('./'))
@@ -63,7 +60,6 @@ gulp.task('scripts', function(callback) {
                 .bundle()
                 .on ('error', handleErrors) //report compile errors
                 .pipe(source(bundleConfig.outputName)) //use vinyl-source-stream to make stream gulp compatible. Specify desired output filename here.
-                .pipe(cache('scripts'))
                 .pipe(gulp.dest(bundleConfig.dest))
                 .on('end', reportFinished);
         };

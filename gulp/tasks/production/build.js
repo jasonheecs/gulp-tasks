@@ -12,7 +12,8 @@ gulp.task('build:production', function(callback) {
         'sprites',
         [
             'sass',
-            'concat-js'
+            'concat-js',
+            'favicon'
             // 'scripts'
         ],
         'base64::run',

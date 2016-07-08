@@ -202,6 +202,16 @@ module.exports = {
                         accurate: true,
                         quality: 'high'
                     }
+                },
+                gif: {
+                    name: 'imagemin-gifsicle',
+                    options: {
+                        optimizationLevel: 3
+                    }
+                },
+                svg: {
+                    name: 'imagemin-svgo',
+                    options: {}
                 }
             }
         }
@@ -224,6 +234,22 @@ module.exports = {
         export: {
             dest: '/databases/',
             filename: 'db_export_' + getTimestamp() + '.sql'
+        }
+    },
+    favicon: {
+        src: src + '/favicon/favicon.png',
+        dest: dev + imagesFolderPath + 'favicon/',
+        path: imagesFolderPath.substring(1) + 'favicon/',
+        markup: {
+            src: src + '/favicon/favicon.html',
+            dest: src + '/favicon'
+        },
+        dataFile: src + '/favicon/faviconData.json',
+        settings: {
+            windowsBgColor: '#da532c',
+            chromeThemeColor: '#ffffff',
+            androidManifestName: 'Website',
+            safariPinnedColor: '#5bbad5'
         }
     }
 };

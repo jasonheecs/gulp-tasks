@@ -3,13 +3,12 @@
  * Dependencies:
  * - gulp-ssh
  * - gulp-notifier
- * - node-notifier
  */
 
 var gulp = require('gulp');
 var util = require('util');
 var GulpSSH = require('gulp-ssh');
-var notifier = require('node-notifier');
+var notification = require('../../util/notification');
 var gnotify = require('gulp-notify');
 var exec = require('child_process').exec;
 var credentials = require('../../credentials').db.local;
@@ -49,11 +48,8 @@ gulp.task('db:export', function(callback) {
                 if (!err) {
                     // use node notifier instead of gulp notifer here because not using gulp stream.
                     // feels more right this way, rather than hacking a solution.
-                    notifier.notify({
-                      title: 'Database exported',
-                      message: 'Database dump located at ' + sqlDumpFilePath,
-                      sound: true
-                    });
+                    notification.notify('Database exported',
+                                        'Database dump located at ' + sqlDumpFilePath);
                 }
 
                 callback(err);
