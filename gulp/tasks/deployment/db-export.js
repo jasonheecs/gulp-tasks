@@ -16,17 +16,14 @@ var credentials = require('../../credentials').db.local;
 var config = require('../../config').db.export;
 
 gulp.task('db:export', function(callback) {
-    var shellCommand;
     var sqlDumpFilePath = config.dest + config.filename;
+    var shellCommand = getSqlDumpCommand(sqlDumpFilePath);
 
     if (credentials.ssh) { //if ssh credentials are present (i.e: using vagrant box)
         var gulpSSH = new GulpSSH({
           ignoreErrors: false,
           sshConfig: credentials.ssh
         });
-
-        shellCommand = util.format('mysqldump -u %s -p%s -h %s %s', 
-                                    credentials.username, credentials.password, credentials.host, credentials.db_name);
 
         return gulpSSH
             .exec([shellCommand],{filePath: sqlDumpFilePath})
@@ -37,20 +34,17 @@ gulp.task('db:export', function(callback) {
             }));
     }
 
-    shellCommand = util.format('mysqldump -u %s -p%s -h %s %s > %s', 
-                                    credentials.username, credentials.password, credentials.host, credentials.db_name, '.'  + sqlDumpFilePath);
-
     var isWin = /^win/.test(process.platform);
     var mkdir = '';
 
     if (isWin) {
-        mkdir = exec('if not exist ".\databases" mkdir databases');
+        mkdir = exec('if not exist ".\databases\NUL" mkdir databases');
     } else {
         mkdir = exec('mkdir -p databases');
     }
     
     mkdir.on('close', function(code) {
-        if (code === 0) { // process executed successfully
+        if (code === 0 || (isWin && code === 1)) { // process executed successfully, on Windows, if dir already exists, the mkdir will exit with a code of 1
             exec(shellCommand, function (err, stdout, stderr) {
                 if (!err) {
                     // use node notifier instead of gulp notifer here because not using gulp stream.
@@ -67,3 +61,31 @@ gulp.task('db:export', function(callback) {
         }
     });
 });
+
+/**
+ * Generates the shell command for mysqldump depending on if there is a blank password / using GulpSSH.
+ * @return {string} mysqldump shell command
+ */
+function getSqlDumpCommand(sqlDumpFilePath) {
+    var shellCommand;
+
+    if (credentials.ssh) {
+        if (credentials.password.length === '') {
+            shellCommand = util.format('mysqldump -u %s -h %s %s', 
+                                        credentials.username, credentials.host, credentials.db_name);
+        } else {
+            shellCommand = util.format('mysqldump -u %s -p%s -h %s %s', 
+                                        credentials.username, credentials.password, credentials.host, credentials.db_name);
+        }
+    } else {
+        if (credentials.password.length === '') {
+            shellCommand = util.format('mysqldump -u %s -h %s %s > %s', 
+                                            credentials.username, credentials.host, credentials.db_name, '.'  + sqlDumpFilePath);
+        } else {
+            shellCommand = util.format('mysqldump -u %s -p%s -h %s %s > %s', 
+                                            credentials.username, credentials.password, credentials.host, credentials.db_name, '.'  + sqlDumpFilePath);
+        }
+    }
+
+    return shellCommand;
+}
