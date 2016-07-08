@@ -1,3 +1,11 @@
+/**
+ * Generates favicons using http://realfavicongenerator.net/
+ * Dependencies:
+ * - gulp-real-favicon
+ * - image-size
+ * - run-sequence
+ */
+
 var fs = require('fs');
 var gulp = require('gulp');
 var realFavicon = require ('gulp-real-favicon');

@@ -67,9 +67,9 @@ module.exports = {
         cascade: true // use Visual Cascading
     },
     browserify: {
-        debug: true, //enable source maps
-        extensions: ['.coffee', '.hbs'], //additional file extensions to make optional
-        //a separate bundle will be generated for each bundle config below
+        debug: true, // enable source maps
+        extensions: ['.coffee', '.hbs'], // additional file extensions to make optional
+        // a separate bundle will be generated for each bundle config below
         bundleConfigs: [
             {
                 entries: src + '/js/custom.js',
@@ -94,10 +94,10 @@ module.exports = {
         }
     },
     watch: {
-        platformFiles: determineFilesToWatch(platform),
-        sass: src + '/sass/**/*.{sass,scss}',
-        scripts: src + '/js/**/*.js',
-        sprites: src + '/sprites/*.{png,jpg,jpeg}'
+        platformFiles: determineFilesToWatch(platform), //platform-specific files to watch
+        sass: src + '/sass/**/*.{sass,scss}', // sass files to watch
+        scripts: src + '/js/**/*.js', // js files to watch
+        sprites: src + '/sprites/*.{png,jpg,jpeg}' // sprite images to watch
     },
     scsslint: {
         src: [
@@ -162,18 +162,18 @@ module.exports = {
     },
     optimise: {
         css : {
-            src: dev + cssFolderPath + '**/*.css',
-            dest: dev + cssFolderPath,
+            src: dev + cssFolderPath + '**/*.css', // where the unoptimised css files are
+            dest: dev + cssFolderPath, // where to output the optimised css files
             options: {
                 autoprefixer: false
             }
         },
         js : {
-            src: dev + jsFolderPath + '**/*.js',
-            dest: dev + jsFolderPath
+            src: dev + jsFolderPath + '**/*.js', // where the unoptimised js files are
+            dest: dev + jsFolderPath // where to output the optimised js files
         },
         images: {
-            sets: [
+            sets: [ // image sets for optimisation
                 {
                     src: dev + imagesFolderPath + '**/*.{jpg,jpeg,png,gif,svg}',
                     dest: dev + imagesFolderPath,
@@ -200,7 +200,8 @@ module.exports = {
                     name: 'imagemin-jpeg-recompress',
                     options: {
                         accurate: true,
-                        quality: 'high'
+                        quality: 'high',
+                        progressive: true
                     }
                 },
                 gif: {
@@ -219,7 +220,7 @@ module.exports = {
     zip: {
         src: [
             dev + '/**/*',
-            '!' + dev + '/sftp-config.json'
+            '!' + dev + '/sftp-config.json' // do not include sftp-config.json in zip file
         ],
         dest: getTimestamp() + '.zip'
     },
@@ -237,19 +238,19 @@ module.exports = {
         }
     },
     favicon: {
-        src: src + '/favicon/favicon.png',
-        dest: dev + imagesFolderPath + 'favicon/',
-        path: imagesFolderPath.substring(1) + 'favicon/',
+        src: src + '/favicon/favicon.png', // where the base image (in png) is
+        dest: dev + imagesFolderPath + 'favicon/', // where to output the favicon images
+        path: imagesFolderPath.substring(1) + 'favicon/', // path to prefix in favicon HTML src
         markup: {
-            src: src + '/favicon/favicon.html',
+            src: src + '/favicon/favicon.html', // where the favicon markup HTML file is
             dest: src + '/favicon'
         },
-        dataFile: src + '/favicon/faviconData.json',
+        dataFile: src + '/favicon/faviconData.json', // where the favicon data file is
         settings: {
-            windowsBgColor: '#da532c',
-            chromeThemeColor: '#ffffff',
-            androidManifestName: 'Website',
-            safariPinnedColor: '#5bbad5'
+            windowsBgColor: '#da532c', // favicon bg color on Windows Metro UI
+            chromeThemeColor: '#ffffff', // favicon theme color on Android Chrome
+            androidManifestName: 'Website', // project manifest name
+            safariPinnedColor: '#5bbad5' // favicon pinned color on Safari
         }
     }
 };
