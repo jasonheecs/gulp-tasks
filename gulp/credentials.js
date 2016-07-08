@@ -12,7 +12,7 @@ module.exports = {
     db: {
         local: {
             host: 'localhost',
-            db_name: 'scotchbox',
+            db_name: 'hegen',
             username: 'root',
             password: 'root',
 

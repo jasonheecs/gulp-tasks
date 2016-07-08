@@ -7,12 +7,14 @@
 var dev                 = 'public'; // development directory (where website in development with unoptimised assets are located)
 var src                 = 'src'; // src directory (where various prebuilt assets are located)
 
-var platform            = 'Wordpress'; // which platform this project is built on. (Joomla / Wordpress / Prestashop)
-var tplFolderPath       = '/wp-content/themes/twentysixteen/'; // folder path of the active template / theme
+var platform            = 'Prestashop'; // which platform this project is built on. (Joomla / Wordpress / Prestashop)
+var tplFolderPath       = '/themes/leo_taki/'; // folder path of the active template / theme
 var cssFolderPath       = tplFolderPath + 'css/custom/'; // where the css assets are located in the current template
 var jsFolderPath        = tplFolderPath + 'js/custom/'; // where the js assets are located in the current template
-var imagesFolderPath    = '/wp-content/uploads/'; // main images folder in development directory
+var imagesFolderPath    = '/img/'; // main images folder in development directory
 var tplImagesFolderPath = tplFolderPath + 'img/'; // images folder path in the current template (used by template css and plugins)
+
+var proxyUrl = 'http://192.168.33.10/';
 
 module.exports = {
     browsersync: {
@@ -22,7 +24,6 @@ module.exports = {
                 dev + jsFolderPath + '*.js',
                 dev + '/images/**/*.{jpg,jpeg,png,gif,webp}'
             ],
-            host: "192.168.1.1", // Override auto host detection
             notify: {
                 styles: { // set notification CSS styles
                     'backgroundColor': '#d11a80',
@@ -32,8 +33,7 @@ module.exports = {
             },
             open: 'local', // decide which URL to open automatically when Browsersync starts. Can be true, local, external, ui, ui-external, tunnel or false
             port: 8000, // use a specific port, default port used by Browsersync is 3000
-            proxy: 'http://192.168.33.10/', // proxy an existing vhost
-            // proxy: 'localhost/gulp-tasks/public',
+            proxy: proxyUrl, // proxy an existing vhost
         },
         production: {
             codeSync: false, // Don't send any file-change events to browsers
@@ -44,7 +44,7 @@ module.exports = {
             notify: false, // disable notifications
             open: 'external', // decide which URL to open automatically when Browsersync starts. Can be true, local, external, ui, ui-external, tunnel or false
             port: 9999, // use a specific port, default port used by Browsersync is 3000
-            proxy: 'http://192.168.33.10/', // proxy an existing vhost
+            proxy: proxyUrl, // proxy an existing vhost
             reloadDebounce: 10000, // wait for 10 seconds after a reload event before allowing more
             scrollProportionally: false, // disable syncing of viewports to TOP position
             scrollThrottle: 10000, // only send scroll events every 10 seconds
@@ -302,7 +302,11 @@ function determineFilesToWatch(platform) {
                 dev + '/modules/**/*.{php,tpl,css,js}',
                 dev + '/override/**/*.{php,tpl,css,js}',
                 '!' + dev + tplFolderPath + '/cache/**/*',
-                dev + tplFolderPath + '**/*.{php,tpl}',
+                '!' + dev + jsFolderPath + '**/*.js',
+                dev + tplFolderPath + 'js/**.js',
+                dev + tplFolderPath + '/modules/**/*.{php,tpl}',
+                dev + tplFolderPath + '/sub/**/*.tpl',
+                dev + tplFolderPath + '*.tpl',
             ];
 
         case PLATFORM_WORDPRESS:
