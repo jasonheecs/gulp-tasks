@@ -40,7 +40,15 @@ gulp.task('db:export', function(callback) {
     shellCommand = util.format('mysqldump -u %s -p%s -h %s %s > %s', 
                                     credentials.username, credentials.password, credentials.host, credentials.db_name, '.'  + sqlDumpFilePath);
 
-    var mkdir = exec('mkdir -p databases');
+    var isWin = /^win/.test(process.platform);
+    var mkdir = '';
+
+    if (isWin) {
+        mkdir = exec('if not exist ".\databases" mkdir databases');
+    } else {
+        mkdir = exec('mkdir -p databases');
+    }
+    
     mkdir.on('close', function(code) {
         if (code === 0) { // process executed successfully
             exec(shellCommand, function (err, stdout, stderr) {

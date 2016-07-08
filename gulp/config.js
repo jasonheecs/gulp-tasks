@@ -52,7 +52,7 @@ module.exports = {
         }
     },
     sass: {
-        src: src + '/scss/**/*.{sass,scss}', // dir where the scss files reside
+        src: src + '/sass/**/*.{sass,scss}', // dir where the scss files reside
         dest: dev + cssFolderPath, // dir to output the css file
         options: {
             outputStyle: 'expanded', // CSS output style (nested | expanded | compact | compressed)
@@ -95,15 +95,15 @@ module.exports = {
     },
     watch: {
         platformFiles: determineFilesToWatch(platform),
-        sass: src + '/scss/**/*.{sass,scss}',
+        sass: src + '/sass/**/*.{sass,scss}',
         scripts: src + '/js/**/*.js',
         sprites: src + '/sprites/*.{png,jpg,jpeg}'
     },
     scsslint: {
         src: [
-            src + '/scss/**/*.{sass,scss}', // dir where scss files are located
-            '!' + src + '/scss/_sprites.scss', //ignore generated sprites 
-            '!' + src + '/scss/_sprites-jpg.scss'
+            src + '/sass/**/*.{sass,scss}', // dir where scss files are located
+            '!' + src + '/sass/_sprites.scss', //ignore generated sprites 
+            '!' + src + '/sass/_sprites-jpg.scss'
         ],
         options: {
             bundleExec: false // If your scss_lint gem is installed via bundler, then set this option to true
@@ -116,7 +116,7 @@ module.exports = {
         png: {
             src: src + '/sprites/*.png', // where the sprite icons are located
             dest: {
-                css: src + '/scss/', // where to output the sprite scss file
+                css: src + '/sass/', // where to output the sprite scss file
                 image: dev + tplImagesFolderPath // where to output the sprite image file
             },
             options: {
@@ -139,7 +139,7 @@ module.exports = {
         jpg: {
             src: src + '/sprites/*.{jpg,jpeg}', // where the sprite icons are located
             dest: {
-                css: src + '/scss/', // where to output the sprite scss file
+                css: src + '/sass/', // where to output the sprite scss file
                 image: dev + tplImagesFolderPath // where to output the sprite image file
             },
             options: {
