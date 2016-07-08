@@ -23,7 +23,6 @@
     "gulp-csscomb": "^3.0.7",
     "gulp-cssnano": "^2.1.2",
     "gulp-imagemin": "^3.0.1",
-    "gulp-imageoptim": "^1.0.4",
     "gulp-jshint": "^2.0.1",
     "gulp-merge-media-queries": "^0.2.1",
     "gulp-notify": "^2.2.0",
@@ -42,6 +41,7 @@
     "gulp.spritesmith": "^6.2.1",
     "imagemin-jpeg-recompress": "^5.1.0",
     "imagemin-pngquant": "^5.0.0",
+    "image-size": "^0.5.0",
     "jshint": "^2.9.2",
     "jshint-stylish": "^2.2.0",
     "node-notifier": "^4.6.0",
@@ -52,8 +52,5 @@
     "vinyl-ftp": "^0.5.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0"
-  },
-  "dependencies": {
-    "image-size": "^0.5.0"
   }
 }

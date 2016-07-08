@@ -69,7 +69,7 @@ gulp.task('generate-favicon', function(done) {
             },
             androidChrome: {
                 pictureAspect: 'noChange',
-                themeColor: '#ffffff',
+                themeColor: config.settings.chromeThemeColor,
                 manifest: {
                     name: config.settings.androidManifestName,
                     display: 'standalone',
