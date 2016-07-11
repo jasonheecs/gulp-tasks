@@ -235,6 +235,9 @@ module.exports = {
         export: {
             dest: '/databases/',
             filename: 'db_export_' + getTimestamp() + '.sql'
+        },
+        import: {
+            sshDirRoot: '/var/www/'
         }
     },
     favicon: {
