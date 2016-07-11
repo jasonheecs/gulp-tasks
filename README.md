@@ -1,9 +1,17 @@
 # Modular Gulp Kit
 A modular set of gulp tasks that I made for my Wordpress / Joomla / Prestashop projects. Feel free to fork and modify it to your own tastes. Based on the excellent [Gulp tutorials](http://stefanimhoff.de/2014/gulp-tutorial-1-intro-setup/) by Stefan Imhoff.
+
 # Configuration
-To configure the gulp tasks for each project, you will need to modify the config.js and credentials.js files in the gulp folder.
+Directory and top level settings are exposed in gulp/config.js. Use this file to update paths to match the directory structure of your project, and to adjust task options.
+
+Credentials for deployment tasks are set in gulp/credentials.js. Set the right ftp credentials, and you should be able to deploy your website via gulp.
+
+Not all configuration is exposed here. For advanced task configuration, you can always edit the tasks themselves in gulp/tasks.
+
 # Usage
-```git clone https://github.com/jasonheecs/gulp-tasks.git MyApp
+Make sure Node is installed and run the following:
+```bash
+git clone https://github.com/jasonheecs/gulp-tasks.git MyApp
 cd MyApp
 npm install
 ```
@@ -25,6 +33,7 @@ Lint scss files for writing clean and consistent SCSS
 Generates CSS sprites (stylesheets and images)
 ### watch
 Watch for file changes and inject them / reload the browser.
+
 ## gulp publish
 The `gulp publish` command is for optimising the site for deployment and consists of the following tasks:
 ### base64
@@ -39,6 +48,7 @@ Minify and optimise css file(s)
 Optimise image file sizes
 ### optimise:js
 Minify and optimise JS files
+
 ## gulp deploy
 The `gulp deploy` command is meant for quick deployment of the website via the command line. It consists of the following tasks:
 ### db:export
