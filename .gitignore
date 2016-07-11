@@ -5,8 +5,5 @@ node_modules
 #do not store test folders
 public/**
 !public/**/*.gitkeep
-src/**
-!src/**/*.gitkeep
-dist
 databases
 *.sql
