@@ -20,10 +20,6 @@ var shellCommand;
 
 gulp.task('db:import', function(callback) {
     var sqlDumpFilePath = config.dest + config.filename;
-    var gulpSSH = new GulpSSH({
-      ignoreErrors: false,
-      sshConfig: credentials.ssh
-    });
 
     inquirer.prompt([{
         type: 'input',
@@ -39,9 +35,14 @@ gulp.task('db:import', function(callback) {
         }
     }]).then(function (answers) {
         databaseFile = answers.database_file;
-        shellCommand = getSqlDumpCommand(config.sshDirRoot + databaseFile);
 
         if (credentials.ssh) { //if ssh credentials are present (i.e: using vagrant box)
+            var gulpSSH = new GulpSSH({
+              ignoreErrors: false,
+              sshConfig: credentials.ssh
+            });
+            shellCommand = getSqlDumpCommand(config.sshDirRoot + databaseFile);
+
             return gulpSSH
                 .exec([shellCommand],{filePath: databaseFile})
                 .pipe(gnotify({
@@ -49,6 +50,8 @@ gulp.task('db:import', function(callback) {
                     message: 'SQL File imported successfully'
                 }));
         } else {
+            shellCommand = getSqlDumpCommand(databaseFile);
+
             exec(shellCommand, function (err, stdout, stderr) {
                 if (!err) {
                     // use node notifier instead of gulp notifer here because not using gulp stream.
