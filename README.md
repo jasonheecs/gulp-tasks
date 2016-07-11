@@ -1,12 +1,64 @@
 # Modular Gulp Kit
-A modular set of gulp tasks that I made for my Wordpress / Joomla / Prestashop projects. Feel free to fork and modify it to your own tastes. Based on the excellent [Gulp tutorials](http://stefanimhoff.de/2014/gulp-tutorial-1-intro-setup/) by Stefan Imhoff.
+A modular set of gulp tasks that I made for my Wordpress / Joomla / Prestashop projects at my agency. Feel free to fork and modify it to your own tastes. Based on the excellent [Gulp tutorials](http://stefanimhoff.de/2014/gulp-tutorial-1-intro-setup/) by Stefan Imhoff.
+
+# Project Structure (Default)
+With the default configuration settings, this gulp kit assumes the project directory structure is as follows:
+```
+├── gulp               # Folder containing all the gulp tasks
+│   ├── config.js      # Tasks configuration
+│   ├── credentials.js # Credentials used to deploy project via Gulp
+│   ├── tasks
+│   │   ├── default.js
+│   │   ├── deploy.js
+│   │   ├── deployment
+│   │   │   ├── db-export.js
+│   │   │   ├── ftp.js
+│   │   │   └── zip.js
+│   │   ├── development
+│   │   │   ├── browser-sync.js
+│   │   │   ├── build.js
+│   │   │   ├── concat-js.js
+│   │   │   ├── jshint.js
+│   │   │   ├── rebuild.js
+│   │   │   ├── sass.js
+│   │   │   ├── scripts.js
+│   │   │   ├── scss-lint.js
+│   │   │   ├── sprites.js
+│   │   │   └── watch.js
+│   │   ├── production
+│   │   │   ├── base64.js
+│   │   │   ├── browser-sync.js
+│   │   │   ├── build.js
+│   │   │   ├── favicon.js
+│   │   │   ├── optimise-css.js
+│   │   │   ├── optimise-images.js
+│   │   │   └── optimise-js.js
+│   │   ├── publish.js
+│   │   └── sync
+│   │       └── db-import.js
+│   └── util
+│       ├── bundleLogger.js
+│       ├── handleErrors.js
+│       └── notification.js
+├── gulpfile.js
+├── package.json
+├── public             # This is where your Wordpress / Joomla / Prestashop project files will reside in
+└── src
+├── favicon            # favicon files
+    │   ├── favicon.html
+    │   ├── favicon.png
+    │   └── faviconData.json
+├── js                 # js files
+├── sass               # .scss files
+└── sprites            # images used for css sprites
+```
 
 # Configuration
-Directory and top level settings are exposed in gulp/config.js. Use this file to update paths to match the directory structure of your project, and to adjust task options.
+Directory and top level settings are exposed in gulp/config.js. Use this file to update paths to match the directory structure of your project, and to adjust task options. Refer to example config files in examples folder.
 
-Credentials for deployment tasks are set in gulp/credentials.js. Set the right ftp credentials, and you should be able to deploy your website via gulp.
+Credentials for deployment tasks are set in gulp/credentials.js. Set the right ftp credentials, and you should be able to deploy your website via gulp. To be able to export the local development database as a sql dump via Gulp, set the local database credentials. Remove the ssh credentials if you are not developing with a VM like Vagrant.
 
-Not all configuration is exposed here. For advanced task configuration, you can always edit the tasks themselves in gulp/tasks.
+Not all configuration is exposed via the config file. For advanced task configuration, you can always edit the tasks themselves in gulp/tasks.
 
 # Usage
 Make sure Node is installed and run the following:
@@ -42,6 +94,8 @@ Convert small background images used in css files into base64-encoded data URI s
 Spins up a Browsersync server for the optimised build of the website
 ### build:production
 Run all tasks need for a production / optimisation build:production
+### favicon
+Generates favicons for multiple platforms via [Real Favicon Generator](http://realfavicongenerator.net/). The HTML to display the favicons is output in `src/favicon.html` (configurable). 
 ### optimise:css
 Minify and optimise css file(s)
 ### optimise:images
