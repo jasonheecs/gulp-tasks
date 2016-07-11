@@ -44,13 +44,13 @@ With the default configuration settings, this gulp kit assumes the project direc
 ├── package.json
 ├── public             # This is where your Wordpress / Joomla / Prestashop project files will reside in
 └── src
-├── favicon            # favicon files
-        │   ├── favicon.html
-        │   ├── favicon.png
-        │   └── faviconData.json
-├── js                 # js files
-├── sass               # .scss files
-└── sprites            # images used for css sprites
+    ├── favicon        # favicon files
+            │   ├── favicon.html
+            │   ├── favicon.png
+            │   └── faviconData.json
+    ├── js             # js files
+    ├── sass           # .scss files
+    └── sprites        # images used for css sprites
 ```
 
 # Configuration
